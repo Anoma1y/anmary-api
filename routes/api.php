@@ -16,6 +16,9 @@ Route::group([
     'middleware' => ['api']
 ], function () {
 
+    // Product
+    Route::post('/product', 'Product\ProductController@POST_Product');
+
     // File
     Route::post('/image', 'Image\ImageController@POST_Image');
     Route::get('/image/{image_id}', 'Image\ImageController@GET_ImageSingle');
@@ -45,4 +48,5 @@ Route::group([
     Route::post('/composition', 'Composition\CompositionController@POST_Composition');
     Route::patch('/composition/{composition_id}', 'Composition\CompositionController@PATCH_CompositionSingle');
 
+    Route::post('/compounds', 'Compounds\CompoundsController@POST_Compounds');
 });

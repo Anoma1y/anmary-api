@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Resources\Season;
+namespace App\Http\Resources\Compounds;
 
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Season extends JsonResource {
+class Compounds extends JsonResource {
     public function toArray($request) {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'composition_id' => $this->composition_id,
+            'value' => $this->value,
             'created_at' => (new Carbon($this->created_at))->getTimestamp(),
         ];
     }

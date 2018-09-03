@@ -3,6 +3,11 @@
 namespace App\Models\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Category\Category;
+use App\Models\Brand\Brand;
+use App\Models\Season\Season;
+use App\Models\Image\Image;
+use App\Models\Composition\Composition;
 
 class Product extends Model
 {
@@ -26,7 +31,7 @@ class Product extends Model
     }
 
     public function season() {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Season::class);
     }
 
     public function image() {
