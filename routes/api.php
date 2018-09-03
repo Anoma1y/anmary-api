@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +11,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'prefix' => 'v1',
+    'middleware' => ['api']
+], function () {
+
+    Route::get('/category', 'Category\CategoryController@GET_Category');
+    Route::post('/category', 'Category\CategoryController@POST_Category');
+    Route::patch('/category/{category_id}', 'Category\CategoryController@PATCH_CategorySingle');
+
 });
