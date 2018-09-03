@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
-use App\Category;
+use App\Models\Category\Category;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Season;
 
 use App\Http\Controllers\Controller;
-use App\Season;
+use App\Models\Season\Season;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

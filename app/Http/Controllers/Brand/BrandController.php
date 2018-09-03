@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Brand;
 
 use App\Http\Controllers\Controller;
-use App\Brand;
+use App\Models\Brand\Brand;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

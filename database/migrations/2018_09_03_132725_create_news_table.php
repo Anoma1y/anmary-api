@@ -19,7 +19,8 @@ class CreateNewsTable extends Migration
             $table->string('name', 100);
             $table->text('content');
 
-            $table->integer('image_id')->unsigned();
+            $table->integer('image_id')
+                ->nullable(true);
             $table->foreign('image_id')
                 ->references('id')
                 ->on('images');

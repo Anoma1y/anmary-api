@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Image;
 
 use App\Http\Controllers\Controller;
-use App\Image;
+use App\Models\Image\Image;
 use App\Http\Resources\Image\Image as ImageResource;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
