@@ -16,6 +16,7 @@ class CreateProductsCompositionTable extends Migration
         Schema::create('product_composition', function (Blueprint $table) {
             $table->integer('product_id')->unsigned();
             $table->integer('composition_id')->unsigned();
+            $table->integer('value')->default(0);
 
             $table->foreign('product_id')->references('id')->on('products')
                 ->onUpdate('cascade')->onDelete('cascade');

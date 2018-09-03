@@ -40,4 +40,9 @@ Route::group([
     Route::post('/news', 'News\NewsController@POST_News');
     Route::patch('/news/{news_id}', 'News\NewsController@PATCH_NewsSingle');
 
+    // Composition
+    Route::get('/composition', 'Composition\CompositionController@GET_Composition');
+    Route::post('/composition', 'Composition\CompositionController@POST_Composition');
+    Route::patch('/composition/{composition_id}', 'Composition\CompositionController@PATCH_CompositionSingle');
+
 });
