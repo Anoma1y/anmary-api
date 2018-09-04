@@ -49,4 +49,24 @@ Route::group([
     Route::patch('/composition/{composition_id}', 'Composition\CompositionController@PATCH_CompositionSingle');
 
     Route::post('/compounds', 'Compounds\CompoundsController@POST_Compounds');
+
+    // Roles
+    Route::get('/role/schema', 'Role\RoleController@GET_RoleSchema');
+    Route::post('/role', 'Role\RoleController@POST_Role');
+    Route::get('/role', 'Role\RoleController@GET_Role');
+    Route::get('/role/{role_id}', 'Role\RoleController@GET_RoleSingle');
+    Route::patch('/role/{role_id}', 'Role\RoleController@PATCH_RoleSingle');
+
+    // Me
+    Route::get('/me', 'Me\MeController@GET_Me');
+
+    // Session
+    Route::post('/session', 'Session\SessionController@POST_Session');
+
+    // User
+    Route::post('/user', 'User\UserController@POST_User');
+    Route::patch('/user/{user_id}', 'User\UserController@PATCH_UserSingle');
+    Route::get('/user/schema', 'User\UserController@GET_UserSchema');
+    Route::get('/user/{user_id}', 'User\UserController@GET_UserSingle');
+    Route::get('/user', 'User\UserController@GET_User');
 });
