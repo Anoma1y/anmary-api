@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\User;
 
+use App\Models\Profile\Profile;
 use App\Models\Role\Role;
 use App\Models\User\User;
 use Illuminate\Console\Command;
@@ -27,6 +28,11 @@ class InitRootUser extends Command {
                 'name' => 'root',
                 'email' => 'root@example.com',
                 'password' => bcrypt($this->argument('password'))
+            ]);
+            Profile::create([
+                'user_id' => $user->id,
+                'phone' => '',
+                'status' => Profile::STATUS_ACTIVE
             ]);
 
             DB::commit();

@@ -57,11 +57,20 @@ Route::group([
     Route::get('/role/{role_id}', 'Role\RoleController@GET_RoleSingle');
     Route::patch('/role/{role_id}', 'Role\RoleController@PATCH_RoleSingle');
 
+    // Roles
+    Route::get('/role/schema', 'Role\RoleController@GET_RoleSchema');
+    Route::post('/role', 'Role\RoleController@POST_Role');
+    Route::get('/role', 'Role\RoleController@GET_Role');
+    Route::get('/role/{role_id}', 'Role\RoleController@GET_RoleSingle');
+    Route::patch('/role/{role_id}', 'Role\RoleController@PATCH_RoleSingle');
+
     // Me
     Route::get('/me', 'Me\MeController@GET_Me');
 
     // Session
     Route::post('/session', 'Session\SessionController@POST_Session');
+    Route::get('/session/refresh', 'Session\SessionController@GET_SessionRefresh');
+    Route::delete('/session', 'Session\SessionController@DELETE_Session');
 
     // User
     Route::post('/user', 'User\UserController@POST_User');
