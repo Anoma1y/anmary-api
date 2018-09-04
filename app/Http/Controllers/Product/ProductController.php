@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category\Category;
 use App\Models\Brand\Brand;
 use App\Models\Image\Image;
+use App\Models\Compounds\Compounds;
 use App\Models\Product\Product;
 use App\Models\Season\Season;
 use Carbon\Carbon;
@@ -24,11 +25,13 @@ class ProductController extends Controller {
             'name' => 'required|string|min:3',
             'discount' => 'integer|between:0,100',
             'price' => 'required|integer|min:0|max:1000000',
-            'image_id' => 'required',
-            'category_id' => 'required',
-            'brand_id' => 'required',
-            'season_id' => 'required',
+            'image_id' => 'required|integer',
+            'category_id' => 'required|integer',
+            'brand_id' => 'required|integer',
+            'season_id' => 'required|integer',
+            'composition' => 'required|array|min:1'
         ]);
+
         if ($validator->fails()) {
             return response([
                 'validation' => $validator->errors()
@@ -47,16 +50,30 @@ class ProductController extends Controller {
 
         $product->save();
         $product = $product->fresh();
-//
-//        // Persist files (if any)
-//        foreach ($filesCollection as $file) {
-//            $product->attachFile($file);
-//        }
-//
-//        // Persist tags (if any)
-//        foreach ($tagsCollection as $tag) {
-//            $product->attachTag($tag);
-//        }
+
+        if ($request->post('composition', false)) {
+            $compoundsCollection = [];
+
+            if (!is_array($request->post('composition', []))) {
+                return response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $compounds = array_unique($request->post('composition', []));
+            try {
+                foreach ($compounds as $compoundId) {
+                    $compound = Compounds::findOrFail((int)$compoundId);
+                    $compoundsCollection[] = $compound;
+                }
+            } catch (ModelNotFoundException $e) {
+                return response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $product->compounds()->detach();
+
+            foreach ($compoundsCollection as $compound) {
+                $product->attachCompounds($compound);
+            }
+        }
 
         return response(new ProductResource($product->fresh()), Response::HTTP_CREATED);
     }

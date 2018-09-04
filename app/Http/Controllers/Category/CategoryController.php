@@ -23,9 +23,9 @@ class CategoryController extends Controller {
     }
 
     public function POST_Category(Request $request) {
-        if (!Auth::user()) {
-            return response(null, Response::HTTP_FORBIDDEN);
-        }
+//        if (!Auth::user()) {
+//            return response(null, Response::HTTP_FORBIDDEN);
+//        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3',
             'description' => 'string|nullable'

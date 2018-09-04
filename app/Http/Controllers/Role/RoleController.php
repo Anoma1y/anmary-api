@@ -74,7 +74,6 @@ class RoleController extends Controller {
             'name' => 'required|string|min:3|unique:roles',
             'display_name' => 'required|string|min:4',
             'description' => 'string|nullable'
-
         ]);
         if ($validator->fails()) {
             return response([

@@ -3,11 +3,12 @@
 namespace App\Models\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use App\Models\Category\Category;
 use App\Models\Brand\Brand;
 use App\Models\Season\Season;
 use App\Models\Image\Image;
-use App\Models\Composition\Composition;
+use App\Models\Compounds\Compounds;
 
 class Product extends Model
 {
@@ -38,9 +39,15 @@ class Product extends Model
         return $this->belongsTo(Image::class);
     }
 
-    public function composition() {
+    public function attachCompounds(Compounds $compound) {
+        DB::table('products_composition')->insert([
+            'product_id' => $this->id, 'compound_id' => $compound->id
+        ]);
+    }
+
+    public function compounds() {
         return $this->belongsToMany(
-            Composition::class, 'product_composition', 'product_id', 'composition_id'
+            Compounds::class, 'products_composition', 'product_id', 'compound_id'
         );
     }
 
