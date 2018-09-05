@@ -77,4 +77,60 @@ class ProductController extends Controller {
 
         return response(new ProductResource($product->fresh()), Response::HTTP_CREATED);
     }
+
+    public function GET_Product(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'sum_from' => 'integer|min:1|nullable',
+            'sum_to' => 'integer|min:1|nullable',
+            'name' => 'string|min:3',
+            'price' => 'integer|min:0|max:1000000',
+            'category' => 'integer',
+            'brand' => 'integer',
+            'season' => 'integer'
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'validation' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $products = Product::where('id', '!=', 0);
+        $input = $request->query();
+
+        if ($request->query('sum_from', false)) {
+            $products = $products->where('price', '>=', (int)$input['sum_from']);
+        }
+
+        if ($request->query('sum_to', false)) {
+            $products = $products->where('price', '<=', (int)$input['sum_to']);
+        }
+
+        $numOnPage = (int)$request->query('num_on_page', 10);
+        $page = (int)$request->query('page', 0);
+
+        $operationsTotal = $products->count();
+
+        $products = $products->orderBy('created_at', 'desc')
+            ->skip(($page) * $numOnPage)
+            ->take($numOnPage);
+
+        return response([
+            'records' => new ProductCollectionResource($products->get()),
+            'total_records' => $operationsTotal,
+            'page' => $page,
+            'num_on_page' => $numOnPage
+        ], Response::HTTP_OK);
+
+    }
+
+    public function GET_ProductSingle(Request $request) {
+        try {
+            $operation = Product::findOrFail((int)$request->route('product_id'));
+            return response(new ProductResource($operation), Response::HTTP_OK);
+        } catch (ModelNotFoundException $e) {
+            return response(null, Response::HTTP_NOT_FOUND);
+        }
+    }
+
 }

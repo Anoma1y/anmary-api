@@ -18,6 +18,9 @@ Route::group([
 
     // Product
     Route::post('/product', 'Product\ProductController@POST_Product');
+    Route::get('/product', 'Product\ProductController@GET_Product');
+    Route::get('/product/{product_id}', 'Product\ProductController@GET_ProductSingle');
+    Route::patch('/product/{product_id}', 'Product\ProductController@PATCH_ProductSingle');
 
     // File
     Route::post('/image', 'Image\ImageController@POST_Image');
@@ -49,13 +52,6 @@ Route::group([
     Route::patch('/composition/{composition_id}', 'Composition\CompositionController@PATCH_CompositionSingle');
 
     Route::post('/compounds', 'Compounds\CompoundsController@POST_Compounds');
-
-    // Roles
-    Route::get('/role/schema', 'Role\RoleController@GET_RoleSchema');
-    Route::post('/role', 'Role\RoleController@POST_Role');
-    Route::get('/role', 'Role\RoleController@GET_Role');
-    Route::get('/role/{role_id}', 'Role\RoleController@GET_RoleSingle');
-    Route::patch('/role/{role_id}', 'Role\RoleController@PATCH_RoleSingle');
 
     // Roles
     Route::get('/role/schema', 'Role\RoleController@GET_RoleSchema');
