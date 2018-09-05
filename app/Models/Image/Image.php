@@ -5,8 +5,6 @@ namespace App\Models\Image;
 use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model {
-    const FILES_ROOT_FOLDER = 'docs';
-
     protected $fillable = [
         'original_name',
         'extension',
@@ -14,5 +12,4 @@ class Image extends Model {
         'original_uri',
         'preview_uri'
     ];
-
 }
