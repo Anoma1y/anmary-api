@@ -20,8 +20,8 @@ class Product extends JsonResource {
         return [
             'id' => (int)$this->id,
             'name' => (string)$this->name,
-            'price' => (string)$this->price,
-            'discount' => (string)$this->discount,
+            'price' => (int)$this->price,
+            'discount' => (int)$this->discount,
             'description' => (string)$this->description,
             'image' => new ImageResource(Image::find((int)$this->image_id)),
             'category' => new CategoryResource(Category::find((int)$this->category_id)),
