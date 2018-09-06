@@ -16,19 +16,17 @@ class CreateSizesTable extends Migration
         Schema::create('sizes', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('international', 10)
-                ->nullable(false)
-                ->unique();
+            $table->string('international', 15)->nullable(false);
             $table->string('ru', 10)->nullable(false);
             $table->string('uk', 10)->nullable(false);
             $table->string('us', 10)->nullable(false);
             $table->string('eu', 10)->nullable(false);
             $table->string('it', 10)->nullable(false);
             $table->string('jp', 10)->nullable(false);
-            $table->string('chest', 10)->nullable(false);
-            $table->string('waist', 10)->nullable(false);
-            $table->string('thigh', 10)->nullable(false);
-            $table->string('sleeve', 10)->nullable(false);
+            $table->string('chest', 20)->nullable(false);
+            $table->string('waist', 20)->nullable(false);
+            $table->string('thigh', 20)->nullable(false);
+            $table->string('sleeve', 20)->nullable(false);
 
         });
     }
