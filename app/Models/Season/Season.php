@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Season extends Model {
     protected $fillable = [
-        'name'
+        'name',
+        'description'
     ];
 }
