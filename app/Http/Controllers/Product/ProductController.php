@@ -122,7 +122,8 @@ class ProductController extends Controller {
             'category_id' => 'integer',
             'brand_id' => 'integer',
             'season_id' => 'integer',
-            'composition' => 'array|min:1'
+            'composition' => 'array|min:1',
+            'size' => 'array|min:1'
         ]);
 
         if ($validator->fails()) {
@@ -161,6 +162,32 @@ class ProductController extends Controller {
 
             foreach ($compoundsCollection as $compound) {
                 $product->attachCompounds($compound);
+            }
+        }
+
+        if ($request->post('size', false)) {
+            $proportionsCollection = [];
+
+            if (!is_array($request->post('size', []))) {
+                return response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $proportions = array_unique($request->post('size', []));
+
+
+            try {
+                foreach ($proportions as $proportionId) {
+                    $proportion = Proportion::findOrFail((int)$proportionId);
+                    $proportionsCollection[] = $proportion;
+                }
+            } catch (ModelNotFoundException $e) {
+                return response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $product->proportions()->detach();
+
+            foreach ($proportionsCollection as $proportion) {
+                $product->attachProportions($proportion);
             }
         }
 

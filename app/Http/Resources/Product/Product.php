@@ -16,13 +16,17 @@ use App\Models\Category\Category;
 use App\Models\Brand\Brand;
 use App\Models\Season\Season;
 
+use App\Helpers\Calculate;
+
 class Product extends JsonResource {
+
     public function toArray($request) {
         return [
             'id' => (int)$this->id,
             'name' => (string)$this->name,
             'price' => (int)$this->price,
             'discount' => (int)$this->discount,
+            'total_price' => Calculate::calculateDiscount((int)$this->price, (int)$this->discount),
             'description' => (string)$this->description,
             'image' => new ImageResource(Image::find((int)$this->image_id)),
             'category' => new CategoryResource(Category::find((int)$this->category_id)),
