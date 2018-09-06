@@ -272,4 +272,34 @@ class ProductController extends Controller {
         }
     }
 
+    public function GET_ProductRandom(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'limit' => 'integer|min:1|max:20'
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'validation' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $products = Product::where('id', '!=', 0);
+        $input = $request->query();
+
+        $limit = 10;
+
+        if ($request->query('limit', false)) {
+            $limit = (int)$input['limit'];
+        }
+
+        return response(new ProductCollectionResource(
+            $products
+                ->inRandomOrder(5)
+                ->limit($limit)
+                ->get()),
+            Response::HTTP_OK
+        );
+    }
+
 }

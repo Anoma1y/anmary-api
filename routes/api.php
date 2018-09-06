@@ -19,6 +19,7 @@ Route::group([
     // Product
     Route::post('/product', 'Product\ProductController@POST_Product');
     Route::get('/product', 'Product\ProductController@GET_Product');
+    Route::get('/product/random', 'Product\ProductController@GET_ProductRandom');
     Route::get('/product/{product_id}', 'Product\ProductController@GET_ProductSingle');
     Route::patch('/product/{product_id}', 'Product\ProductController@PATCH_ProductSingle');
 
