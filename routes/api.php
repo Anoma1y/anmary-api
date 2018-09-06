@@ -22,7 +22,7 @@ Route::group([
     Route::get('/product/{product_id}', 'Product\ProductController@GET_ProductSingle');
     Route::patch('/product/{product_id}', 'Product\ProductController@PATCH_ProductSingle');
 
-    // File
+    // Image
     Route::post('/image', 'Image\ImageController@POST_Image');
     Route::get('/image/{image_id}', 'Image\ImageController@GET_ImageSingle');
 
@@ -51,7 +51,14 @@ Route::group([
     Route::post('/composition', 'Composition\CompositionController@POST_Composition');
     Route::patch('/composition/{composition_id}', 'Composition\CompositionController@PATCH_CompositionSingle');
 
-    Route::post('/compounds', 'Compounds\CompoundsController@POST_Compounds');
+    Route::post('/compound', 'Compounds\CompoundsController@POST_Compounds');
+
+    // Composition
+    Route::get('/size', 'Size\SizeController@GET_Size');
+    Route::post('/size', 'Size\SizeController@POST_Size');
+    Route::patch('/size/{size_id}', 'Size\SizeController@PATCH_SizeSingle');
+
+    Route::post('/proportions', 'Proportions\ProportionsController@POST_Proportions');
 
     // Roles
     Route::get('/role/schema', 'Role\RoleController@GET_RoleSchema');

@@ -9,6 +9,7 @@ use App\Models\Brand\Brand;
 use App\Models\Season\Season;
 use App\Models\Image\Image;
 use App\Models\Compounds\Compounds;
+use App\Models\Proportion\Proportion;
 
 class Product extends Model
 {
@@ -48,6 +49,18 @@ class Product extends Model
     public function compounds() {
         return $this->belongsToMany(
             Compounds::class, 'products_composition', 'product_id', 'compound_id'
+        );
+    }
+
+    public function attachProportions(Proportion $compound) {
+        DB::table('products_proportion')->insert([
+            'product_id' => $this->id, 'proportion_id' => $compound->id
+        ]);
+    }
+
+    public function proportions() {
+        return $this->belongsToMany(
+            Proportion::class, 'products_proportion', 'product_id', 'proportion_id'
         );
     }
 

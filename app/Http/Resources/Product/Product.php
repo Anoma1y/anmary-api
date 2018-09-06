@@ -9,6 +9,7 @@ use App\Http\Resources\Category\Category as CategoryResource;
 use App\Http\Resources\Brand\Brand as BrandResource;
 use App\Http\Resources\Season\Season as SeasonResource;
 use App\Http\Resources\Compounds\CompoundsCollection;
+use App\Http\Resources\Proportion\ProportionCollection;
 
 use App\Models\Image\Image;
 use App\Models\Category\Category;
@@ -28,6 +29,7 @@ class Product extends JsonResource {
             'brand' => new BrandResource(Brand::find((int)$this->brand_id)),
             'season' => new SeasonResource(Season::find((int)$this->season_id)),
             'composition' => CompoundsCollection::collection($this->compounds),
+            'sizes' => ProportionCollection::collection($this->proportions),
             'created_at' => (new Carbon($this->created_at))->getTimestamp(),
             'updated_at' => (new Carbon($this->updated_at))->getTimestamp(),
         ];

@@ -10,6 +10,7 @@ use App\Models\Brand\Brand;
 use App\Models\Image\Image;
 use App\Models\Compounds\Compounds;
 use App\Models\Product\Product;
+use App\Models\Proportion\Proportion;
 use App\Models\Season\Season;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -29,7 +30,8 @@ class ProductController extends Controller {
             'category_id' => 'required|integer',
             'brand_id' => 'required|integer',
             'season_id' => 'required|integer',
-            'composition' => 'required|array|min:1'
+            'composition' => 'required|array|min:1',
+            'size' => 'required|array|min:1'
         ]);
 
         if ($validator->fails()) {
@@ -72,6 +74,32 @@ class ProductController extends Controller {
 
             foreach ($compoundsCollection as $compound) {
                 $product->attachCompounds($compound);
+            }
+        }
+
+        if ($request->post('size', false)) {
+            $proportionsCollection = [];
+
+            if (!is_array($request->post('size', []))) {
+                return response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $proportions = array_unique($request->post('size', []));
+
+
+            try {
+                foreach ($proportions as $proportionId) {
+                    $proportion = Proportion::findOrFail((int)$proportionId);
+                    $proportionsCollection[] = $proportion;
+                }
+            } catch (ModelNotFoundException $e) {
+                return response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $product->proportions()->detach();
+
+            foreach ($proportionsCollection as $proportion) {
+                $product->attachProportions($proportion);
             }
         }
 
