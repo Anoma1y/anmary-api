@@ -12,7 +12,8 @@ class Image extends JsonResource {
             'extension' => $this->extension,
             'size' => $this->size,
             'original_uri' => $this->original_uri,
-            'created_at' => (new Carbon($this->created_at))->getTimestamp()
+            'created_at' => (new Carbon($this->created_at))->getTimestamp(),
+            'updated_at' => (new Carbon($this->updated_at))->getTimestamp()
         ];
     }
 }

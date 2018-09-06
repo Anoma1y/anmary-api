@@ -15,6 +15,7 @@ class News extends JsonResource {
             'content' => (string)$this->content,
             'image' => new ImageResource(Image::find((int)$this->image_id)),
             'created_at' => (new Carbon($this->created_at))->getTimestamp(),
+            'updated_at' => (new Carbon($this->updated_at))->getTimestamp(),
         ];
     }
 }

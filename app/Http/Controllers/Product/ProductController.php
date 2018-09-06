@@ -5,17 +5,11 @@ namespace App\Http\Controllers\Product;
 use App\Http\Resources\Product\Product as ProductResource;
 use App\Http\Resources\Product\ProductCollection as ProductCollectionResource;
 use App\Http\Controllers\Controller;
-use App\Models\Category\Category;
-use App\Models\Brand\Brand;
-use App\Models\Image\Image;
 use App\Models\Compounds\Compounds;
 use App\Models\Product\Product;
 use App\Models\Proportion\Proportion;
-use App\Models\Season\Season;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
