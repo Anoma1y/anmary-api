@@ -17,6 +17,7 @@ class seed_sizes extends Seeder
 
         DB::table('sizes')->insert([
             [
+                'id' => 1,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => 'XXS',
@@ -32,6 +33,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '58-60 см.'
             ],
             [
+                'id' => 2,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => 'XS',
@@ -47,6 +49,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '59-61 см.'
             ],
             [
+                'id' => 3,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => 'S',
@@ -62,6 +65,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '59-61 см.'
             ],
             [
+                'id' => 4,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => 'M',
@@ -77,6 +81,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '60-62 см.'
             ],
             [
+                'id' => 5,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => 'M',
@@ -92,6 +97,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '60-62 см.'
             ],
             [
+                'id' => 6,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => 'L',
@@ -107,6 +113,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '60-62 см.'
             ],
             [
+                'id' => 7,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => 'L',
@@ -122,6 +129,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '61-63 см.'
             ],
             [
+                'id' => 8,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => 'XL',
@@ -137,6 +145,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '61-63 см.'
             ],
             [
+                'id' => 9,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => 'XXL',
@@ -152,6 +161,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '61-63 см.'
             ],
             [
+                'id' => 10,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => 'XXL',
@@ -167,6 +177,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '61-63 см.'
             ],
             [
+                'id' => 11,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => 'XXXL',
@@ -182,6 +193,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '62-64 см.'
             ],
             [
+                'id' => 12,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => '4XL',
@@ -197,6 +209,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '62-64 см.'
             ],
             [
+                'id' => 13,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => '4XL',
@@ -212,6 +225,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '62.5-65 см.'
             ],
             [
+                'id' => 14,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => '4XL',
@@ -227,6 +241,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '62.5-65 см.'
             ],
             [
+                'id' => 15,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => '5XL',
@@ -242,6 +257,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '62.5-65 см.'
             ],
             [
+                'id' => 16,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => '5XL',
@@ -257,6 +273,7 @@ class seed_sizes extends Seeder
                 'sleeve' => '62.5-65 см.'
             ],
             [
+                'id' => 17,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'international' => '5XL',

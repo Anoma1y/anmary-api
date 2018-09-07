@@ -14,7 +14,7 @@ class CreateSizesTable extends Migration
     public function up()
     {
         Schema::create('sizes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id')->unsigned();
             $table->timestamps();
             $table->string('international', 15)->nullable(false);
             $table->string('ru', 10)->nullable(false);
@@ -28,6 +28,7 @@ class CreateSizesTable extends Migration
             $table->string('thigh', 20)->nullable(false);
             $table->string('sleeve', 20)->nullable(false);
 
+            $table->primary(['id']);
         });
     }
 
