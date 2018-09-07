@@ -56,8 +56,6 @@ Route::group([
 
     // Composition
     Route::get('/size', 'Size\SizeController@GET_Size');
-    Route::post('/size', 'Size\SizeController@POST_Size');
-    Route::patch('/size/{size_id}', 'Size\SizeController@PATCH_SizeSingle');
 
     Route::post('/proportions', 'Proportions\ProportionsController@POST_Proportions');
 
