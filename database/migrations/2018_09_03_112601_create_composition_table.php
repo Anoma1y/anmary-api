@@ -17,6 +17,7 @@ class CreateCompositionTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('name', 80)->nullable(false);
+            $table->text('description')->nullable(true);
         });
     }
 

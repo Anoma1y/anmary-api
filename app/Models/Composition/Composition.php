@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Composition extends Model {
     protected $fillable = [
-        'name'
+        'name',
+        'description'
     ];
 }
