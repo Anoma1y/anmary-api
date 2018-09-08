@@ -194,7 +194,9 @@ class ProductController extends Controller {
             'sum_from' => 'integer|min:1|nullable',
             'sum_to' => 'integer|min:1|nullable',
             'price' => 'integer|min:0|max:1000000|nullable',
-            'discount' => 'boolean|nullable'
+            'brand' => 'integer|nullable',
+            'category' => 'integer|nullable',
+            'season' => 'integer|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -214,29 +216,35 @@ class ProductController extends Controller {
             $products = $products->where('price', '<=', (int)$input['sum_to']);
         }
 
-        if ($request->query('is_discount', false)) {
-            $products = $products->where('discount', '>', 0);
+        if ($request->query('has_discount', null) !== null) {
+
+            $hasDiscount = (bool)$request->query('has_discount');
+            if ($hasDiscount) {
+                $products = $products->where('discount', '>', 0);
+            } else {
+                $products = $products->where('discount', '=', 0);
+            }
         }
 
-        if ($request->query('categories', false)) {
-            $categories = array_map(function ($element) {
+        if ($request->query('category', false)) {
+            $category = array_map(function ($element) {
                 return (int)$element;
-            }, explode(',', $input['categories']));
-            $products = $products->whereIn('category_id', $categories);
+            }, explode(',', $input['category']));
+            $products = $products->whereIn('category_id', $category);
         }
 
-        if ($request->query('seasons', false)) {
-            $seasons = array_map(function ($element) {
+        if ($request->query('season', false)) {
+            $season = array_map(function ($element) {
                 return (int)$element;
-            }, explode(',', $input['seasons']));
-            $products = $products->whereIn('season_id', $seasons);
+            }, explode(',', $input['season']));
+            $products = $products->whereIn('season_id', $season);
         }
 
-        if ($request->query('brands', false)) {
-            $brands = array_map(function ($element) {
+        if ($request->query('brand', false)) {
+            $brand = array_map(function ($element) {
                 return (int)$element;
-            }, explode(',', $input['brands']));
-            $products = $products->whereIn('brand_id', $brands);
+            }, explode(',', $input['brand']));
+            $products = $products->whereIn('brand_id', $brand);
         }
 
         $numOnPage = (int)$request->query('num_on_page', 10);
