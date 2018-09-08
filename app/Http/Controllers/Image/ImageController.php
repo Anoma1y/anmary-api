@@ -44,7 +44,7 @@ class ImageController extends Controller {
             $image->original_name = $request->file('image', null)->getClientOriginalName();
             $image->extension = strtolower($request->file('image', null)->getClientOriginalExtension());
             $image->size = $request->file('image', null)->getSize();
-            $image->original_uri = '/storage/'.'/'.$imageSubfolder.'/'
+            $image->original_uri = '/storage/'.$imageSubfolder.'/'
                 .$request->file('image', null)->hashName();
             $image->preview_uri = 'undefined';
             $image->save();

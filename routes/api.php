@@ -57,7 +57,7 @@ Route::group([
     // Composition
     Route::get('/size', 'Size\SizeController@GET_Size');
 
-    Route::post('/proportions', 'Proportions\ProportionsController@POST_Proportions');
+    Route::post('/proportion', 'Proportions\ProportionsController@POST_Proportions');
 
     // Roles
     Route::get('/role/schema', 'Role\RoleController@GET_RoleSchema');
