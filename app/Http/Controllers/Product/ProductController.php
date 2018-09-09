@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Compounds\Compounds;
 use App\Models\Product\Product;
 use App\Models\Proportion\Proportion;
+use App\Models\Image\Image;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -20,11 +21,11 @@ class ProductController extends Controller {
             'name' => 'required|string|min:3',
             'discount' => 'integer|between:0,100',
             'price' => 'required|integer|min:0|max:1000000',
-            'image_id' => 'required|integer',
             'category_id' => 'required|integer',
             'brand_id' => 'required|integer',
             'season_id' => 'required|integer',
             'composition' => 'required|array|min:1',
+            'image' => 'required|array|min:1',
             'size' => 'required|array|min:1'
         ]);
 
@@ -40,12 +41,35 @@ class ProductController extends Controller {
         $product->category_id = $request->post('category_id', $product->category_id);
         $product->brand_id = $request->post('brand_id', $product->brand_id);
         $product->season_id = $request->post('season_id', $product->season_id);
-        $product->image_id = $request->post('image_id', $product->image_id);
         $product->price = $request->post('price', $product->price);
         $product->discount = $request->post('discount', $product->discount);
 
         $product->save();
         $product = $product->fresh();
+
+        if ($request->post('image', false)) {
+            $imagesCollection = [];
+
+            if (!is_array($request->post('image', []))) {
+                return response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $images = array_unique($request->post('image', []));
+            try {
+                foreach ($images as $imageId) {
+                    $image = Image::findOrFail((int)$imageId);
+                    $imagesCollection[] = $image;
+                }
+            } catch (ModelNotFoundException $e) {
+                return response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $product->images()->detach();
+
+            foreach ($imagesCollection as $image) {
+                $product->attachImages($image);
+            }
+        }
 
         if ($request->post('composition', false)) {
             $compoundsCollection = [];

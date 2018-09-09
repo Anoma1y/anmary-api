@@ -8,7 +8,7 @@ class CompoundsCollection extends JsonResource {
     public function toArray($request) {
         return [
             'id' => $this->id,
-            'name' => $this->composition->name,
+            'composition_id' => $this->composition_id,
             'value' => $this->value
         ];
     }

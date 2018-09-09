@@ -15,7 +15,7 @@ class CompoundsController extends Controller {
     {
         $validator = Validator::make($request->all(), [
             'composition_id' => 'required|integer',
-            'value' => 'required|integer|between:0,100'
+            'value' => 'required|integer|between:1,100'
         ]);
         if ($validator->fails()) {
             return response([

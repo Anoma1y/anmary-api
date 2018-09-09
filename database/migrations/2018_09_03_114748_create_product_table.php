@@ -17,7 +17,7 @@ class CreateProductTable extends Migration
             $table->increments('id');
             $table->timestamps();
 
-            $table->string('name', 100)
+            $table->string('name', 150)
                 ->nullable(false);
 
             $table->text('description')
@@ -37,11 +37,6 @@ class CreateProductTable extends Migration
             $table->foreign('season_id')
                 ->references('id')
                 ->on('seasons');
-
-            $table->integer('image_id')->unsigned();
-            $table->foreign('image_id')
-                ->references('id')
-                ->on('images');
 
             $table->bigInteger('price')
                 ->nullable(false)

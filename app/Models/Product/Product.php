@@ -16,7 +16,6 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
-        'image_id',
         'category_id',
         'brand_id',
         'season_id',
@@ -63,5 +62,18 @@ class Product extends Model
             Proportion::class, 'products_proportion', 'product_id', 'proportion_id'
         );
     }
+
+    public function attachImages(Image $image) {
+        DB::table('products_image')->insert([
+            'product_id' => $this->id, 'image_id' => $image->id
+        ]);
+    }
+
+    public function images() {
+        return $this->belongsToMany(
+            Image::class, 'products_image', 'product_id', 'image_id'
+        );
+    }
+
 
 }
