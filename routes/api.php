@@ -80,4 +80,8 @@ Route::group([
     Route::get('/user/schema', 'User\UserController@GET_UserSchema');
     Route::get('/user/{user_id}', 'User\UserController@GET_UserSingle');
     Route::get('/user', 'User\UserController@GET_User');
+
+    // Subscribe
+    Route::post('/subscribe', 'Subscribe\SubscribeController@POST_Subscribe');
+
 });
