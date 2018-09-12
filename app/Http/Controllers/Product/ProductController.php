@@ -126,6 +126,7 @@ class ProductController extends Controller {
 
     public function PATCH_ProductSingle(Request $request) {
         $product = null;
+
         try {
             $product = Product::findOrFail((int)$request->route('product_id'));
         } catch (ModelNotFoundException $e) {
@@ -133,15 +134,15 @@ class ProductController extends Controller {
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'string|min:3',
+            'name' => 'required|string|min:3',
             'discount' => 'integer|between:0,100',
-            'price' => 'integer|min:0|max:100000000',
-            'image_id' => 'integer',
-            'category_id' => 'integer',
-            'brand_id' => 'integer',
-            'season_id' => 'integer',
-            'composition' => 'array|min:1',
-            'size' => 'array|min:1'
+            'price' => 'required|integer|min:0|max:100000000',
+            'category_id' => 'required|integer',
+            'brand_id' => 'required|integer',
+            'season_id' => 'required|integer',
+            'composition' => 'required|array|min:1',
+            'image' => 'required|array|min:1',
+            'size' => 'required|array|min:1'
         ]);
 
         if ($validator->fails()) {
@@ -155,9 +156,33 @@ class ProductController extends Controller {
         $product->category_id = $request->post('category_id', $product->category_id);
         $product->brand_id = $request->post('brand_id', $product->brand_id);
         $product->season_id = $request->post('season_id', $product->season_id);
-        $product->image_id = $request->post('image_id', $product->image_id);
         $product->price = $request->post('price', $product->price);
         $product->discount = $request->post('discount', $product->discount);
+
+
+        if ($request->post('image', false)) {
+            $imagesCollection = [];
+
+            if (!is_array($request->post('image', []))) {
+                return response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $images = array_unique($request->post('image', []));
+            try {
+                foreach ($images as $imageId) {
+                    $image = Image::findOrFail((int)$imageId);
+                    $imagesCollection[] = $image;
+                }
+            } catch (ModelNotFoundException $e) {
+                return response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $product->images()->detach();
+
+            foreach ($imagesCollection as $image) {
+                $product->attachImages($image);
+            }
+        }
 
         if ($request->post('composition', false)) {
             $compoundsCollection = [];
@@ -191,7 +216,6 @@ class ProductController extends Controller {
             }
 
             $proportions = array_unique($request->post('size', []));
-
 
             try {
                 foreach ($proportions as $proportionId) {
