@@ -20,7 +20,7 @@ class ProductController extends Controller {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3',
             'discount' => 'integer|between:0,100',
-            'price' => 'required|integer|min:0|max:1000000',
+            'price' => 'required|integer|min:0|max:100000000',
             'category_id' => 'required|integer',
             'brand_id' => 'required|integer',
             'season_id' => 'required|integer',
@@ -135,7 +135,7 @@ class ProductController extends Controller {
         $validator = Validator::make($request->all(), [
             'name' => 'string|min:3',
             'discount' => 'integer|between:0,100',
-            'price' => 'integer|min:0|max:1000000',
+            'price' => 'integer|min:0|max:100000000',
             'image_id' => 'integer',
             'category_id' => 'integer',
             'brand_id' => 'integer',
