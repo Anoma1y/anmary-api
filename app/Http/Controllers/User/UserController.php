@@ -11,11 +11,16 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller {
     public function POST_User(Request $request) {
-        // TODO: Add permission check
+
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:5|max:55',
             'email' => 'required|string|email|min:5|max:255|unique:users',
@@ -23,7 +28,6 @@ class UserController extends Controller {
             'status' => 'required|integer|min:1',
             'role_id' => 'required|integer|min:1',
             'phone' => 'string|min:5|nullable'
-            // TODO: Create check for status
         ]);
         if ($validator->fails()) {
             return response([
@@ -63,45 +67,39 @@ class UserController extends Controller {
     }
 
     public function PATCH_UserSingle(Request $request) {
-        // TODO: Add auth guard
-        // TODO: Separate into service
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         try {
             $user = User::findOrFail((int)$request->route('user_id'));
 
-            // Build validation rules
             $validationRules = [];
 
-            // Updating username
             if ($request->post('name', false)) {
                 $validationRules['name'] = 'string|min:5|max:55';
             }
 
-            // Updating email
             if ($request->post('email', false)) {
                 $validationRules['email'] = 'string|email|min:5|max:255|unique:users';
             }
 
-            // Updating password
             if ($request->post('password', false)) {
                 $validationRules['password'] = 'string|min:6';
             }
 
-            // Updating status
             if ($request->post('status', false)) {
                 $validationRules['status'] = 'integer|min:1';
             }
 
-            // Updating role
             if ($request->post('role_id', false)) {
                 $validationRules['role_id'] = 'integer|min:1';
             }
 
-            // Updating phone
             if ($request->post('phone', false)) {
                 $validationRules['phone'] = 'string|min:5';
             }
 
-            // Validate input data
             $validator = Validator::make($request->all(), $validationRules);
             if ($validator->fails()) {
                 return response([
@@ -118,7 +116,6 @@ class UserController extends Controller {
                 }
             }
 
-            // Update user
             $user->name = $request->post('name', $user->name);
             $user->email = $request->post('email', $user->email);
             $user->password = $request->post('password', false) ? bcrypt($request->post('password')) : $user->password;
@@ -127,7 +124,6 @@ class UserController extends Controller {
             $user->profile->save();
             $user->save();
 
-            // Assign user role if needed
             if ($role !== null) {
                 $user->detachRoles($user->roles);
                 $user->attachRole($role);
@@ -140,7 +136,11 @@ class UserController extends Controller {
     }
 
     public function GET_UserSingle(Request $request) {
-        // TODO: Add token validation
+
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         try {
             $user = User::findOrFail((int)$request->route('user_id'));
             return response(new UserResource($user), Response::HTTP_OK);
@@ -150,7 +150,10 @@ class UserController extends Controller {
     }
 
     public function GET_User(Request $request) {
-        // TODO: Add token validation
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         $users = User::where('id', '!=', 0);
         if ($request->get('name', false)) {
             $users = $users->where('name', 'like', '%'.$request->get('name').'%');
@@ -159,7 +162,9 @@ class UserController extends Controller {
     }
 
     public function GET_UserSchema(Request $request) {
-        // TODO: Add token validation
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
         return response([
             'status' => Profile::$statusReadable
         ], Response::HTTP_OK);

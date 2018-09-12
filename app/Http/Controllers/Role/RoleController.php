@@ -6,6 +6,7 @@ use App\Helpers\RoleHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Role\RoleCollection;
 use App\Models\Role\Role;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Role\Role as RoleResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -14,12 +15,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends Controller {
     public function GET_RoleSchema(Request $request) {
-        // TODO: Add token guard
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
         return response(RoleHelper::$actions, Response::HTTP_OK);
     }
 
     public function GET_RoleSingle(Request $request) {
-        // TODO: Add token guard
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
         try {
             $role = Role::findOrFail((int)$request->route('role_id'));
             return response(
@@ -32,7 +37,9 @@ class RoleController extends Controller {
     }
 
     public function PATCH_RoleSingle(Request $request) {
-        // TODO: Add token guard
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
         $validator = Validator::make($request->all(), [
             'display_name' => 'string|min:4',
             'description' => 'string|nullable'

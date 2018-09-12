@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Brand\Brand as BrandResource;
+use Illuminate\Support\Facades\Auth;
 
 class BrandController extends Controller {
     public function GET_Brand(Request $request) {
@@ -26,6 +27,11 @@ class BrandController extends Controller {
     }
 
     public function POST_Brand(Request $request) {
+
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3',
             'description' => 'string|nullable',
@@ -47,6 +53,11 @@ class BrandController extends Controller {
     }
 
     public function PATCH_BrandSingle(Request $request) {
+
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         try {
             $brand = Brand::findOrFail((int)$request->route('brand_id'));
             $brand->name = $request->post('name', $brand->name);

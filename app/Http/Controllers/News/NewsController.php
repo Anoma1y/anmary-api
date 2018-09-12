@@ -6,6 +6,7 @@ use App\Models\News\News;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\News\News as NewsResource;
 
@@ -21,6 +22,11 @@ class NewsController extends Controller {
     }
 
     public function POST_News(Request $request) {
+
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3',
             'content' => 'string|nullable',
@@ -42,6 +48,11 @@ class NewsController extends Controller {
     }
 
     public function PATCH_NewsSingle(Request $request) {
+
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         try {
             $category = News::findOrFail((int)$request->route('category_id'));
             $category->name = $request->post('name', $category->name);

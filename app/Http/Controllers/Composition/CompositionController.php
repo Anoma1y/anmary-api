@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Composition\Composition as CompositionResource;
+use Illuminate\Support\Facades\Auth;
 
 class CompositionController extends Controller {
     public function GET_Composition(Request $request) {
@@ -21,6 +22,10 @@ class CompositionController extends Controller {
     }
 
     public function POST_Composition(Request $request) {
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3',
             'description' => 'string|nullable'
@@ -40,6 +45,10 @@ class CompositionController extends Controller {
     }
 
     public function PATCH_CompositionSingle(Request $request) {
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         try {
             $composition = Composition::findOrFail((int)$request->route('composition_id'));
             $composition->name = $request->post('name', $composition->name);

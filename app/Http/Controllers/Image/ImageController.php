@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Validator;
 class ImageController extends Controller {
 
     public function POST_Image(Request $request) {
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
 
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg|min:50|max:4096'

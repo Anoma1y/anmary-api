@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Season\Season;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Season\Season as SeasonResource;
@@ -21,6 +22,11 @@ class SeasonController extends Controller {
     }
 
     public function POST_Season(Request $request) {
+
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3',
             'description' => 'string|nullable'
@@ -40,6 +46,11 @@ class SeasonController extends Controller {
     }
 
     public function PATCH_SeasonSingle(Request $request) {
+
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         try {
             $category = Season::findOrFail((int)$request->route('season_id'));
             $category->name = $request->post('name', $category->name);

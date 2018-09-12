@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use phpDocumentor\Reflection\Types\Null_;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Category\Category as CategoryResource;
 
@@ -23,9 +22,10 @@ class CategoryController extends Controller {
     }
 
     public function POST_Category(Request $request) {
-//        if (!Auth::user()) {
-//            return response(null, Response::HTTP_FORBIDDEN);
-//        }
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3',
             'description' => 'string|nullable'
@@ -45,6 +45,10 @@ class CategoryController extends Controller {
     }
 
     public function PATCH_CategorySingle(Request $request) {
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
         try {
             $category = Category::findOrFail((int)$request->route('category_id'));
             $category->name = $request->post('name', $category->name);
