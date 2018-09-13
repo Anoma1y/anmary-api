@@ -9,7 +9,7 @@ class Category extends JsonResource {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => (string)$this->description
+            'description' => (string)$this->description,
         ];
     }
 }
