@@ -39,7 +39,7 @@ class SeasonController extends Controller {
 
         $category = Season::create([
             'name' => $request->post('name'),
-            'description' => $request->post('description', null)
+            'description' => $request->post('description', '')
         ]);
 
         return response(new SeasonResource($category), Response::HTTP_CREATED);

@@ -45,7 +45,7 @@ class BrandController extends Controller {
 
         $brand = Brand::create([
             'name' => $request->post('name'),
-            'description' => $request->post('description', null),
+            'description' => $request->post('description', ''),
             'country' => $request->post('country')
         ]);
 

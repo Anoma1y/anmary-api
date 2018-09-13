@@ -23,6 +23,7 @@ class Product extends JsonResource {
         return [
             'id' => $this->id,
             'name' => (string)$this->name,
+            'article' => (string)$this->article,
             'price' => (int)$this->price,
             'discount' => (int)$this->discount,
             'total_price' => Calculate::calculateDiscount((int)$this->price, (int)$this->discount),
@@ -33,7 +34,7 @@ class Product extends JsonResource {
             'season' => new SeasonResource(Season::find((int)$this->season_id)),
             'compositions' => CompoundsCollection::collection($this->compounds),
             'sizes' => ProportionCollection::collection($this->proportions),
-            'is_active' => $this->is_active,
+            'is_available' => $this->is_available,
             'created_at' => (new Carbon($this->created_at))->getTimestamp(),
             'updated_at' => (new Carbon($this->updated_at))->getTimestamp(),
         ];

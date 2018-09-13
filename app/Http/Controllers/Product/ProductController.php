@@ -18,7 +18,8 @@ class ProductController extends Controller {
     public function POST_Product(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:3',
+            'name' => 'string',
+            'article' => 'required|min:1|string',
             'discount' => 'integer|between:0,100',
             'price' => 'required|integer|min:0|max:100000000',
             'category_id' => 'required|integer',
@@ -27,7 +28,7 @@ class ProductController extends Controller {
             'composition' => 'required|array|min:1',
             'image' => 'required|array|min:1',
             'size' => 'required|array|min:1',
-            'is_active' => 'boolean|nullable'
+            'is_available' => 'boolean|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -37,14 +38,15 @@ class ProductController extends Controller {
         }
 
         $product = new Product();
-        $product->name = $request->post('name');
-        $product->description = $request->post('description');
+        $product->name = $request->post('name', '');
+        $product->article = $request->post('article');
+        $product->description = $request->post('description', '');
         $product->category_id = $request->post('category_id');
         $product->brand_id = $request->post('brand_id');
         $product->season_id = $request->post('season_id');
         $product->price = $request->post('price');
-        $product->discount = $request->post('discount');
-        $product->is_active = $request->post('is_active', true);
+        $product->discount = $request->post('discount', 0);
+        $product->is_available = $request->post('is_available', true);
 
         $product->save();
         $product = $product->fresh();
@@ -136,7 +138,8 @@ class ProductController extends Controller {
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|min:3',
+            'name' => 'string',
+            'article' => 'required|min:1|string',
             'discount' => 'integer|between:0,100',
             'price' => 'required|integer|min:0|max:100000000',
             'category_id' => 'required|integer',
@@ -145,7 +148,7 @@ class ProductController extends Controller {
             'composition' => 'required|array|min:1',
             'image' => 'required|array|min:1',
             'size' => 'required|array|min:1',
-            'is_active' => 'boolean|nullable'
+            'is_available' => 'boolean|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -155,13 +158,14 @@ class ProductController extends Controller {
         }
 
         $product->name = $request->post('name', $product->name);
+        $product->article = $request->post('article', $product->article);
         $product->description = $request->post('description', $product->description);
         $product->category_id = $request->post('category_id', $product->category_id);
         $product->brand_id = $request->post('brand_id', $product->brand_id);
         $product->season_id = $request->post('season_id', $product->season_id);
         $product->price = $request->post('price', $product->price);
         $product->discount = $request->post('discount', $product->discount);
-        $product->is_active = $request->post('is_active', $product->is_active);
+        $product->is_available = $request->post('is_available', $product->is_available);
 
 
         if ($request->post('image', false)) {
@@ -249,7 +253,7 @@ class ProductController extends Controller {
             'brand' => 'integer|nullable',
             'category' => 'integer|nullable',
             'season' => 'integer|nullable',
-            'is_active' => 'boolean|nullable'
+            'is_available' => 'boolean|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -269,13 +273,13 @@ class ProductController extends Controller {
             $products = $products->where('price', '<=', (int)$input['sum_to']);
         }
 
-        if ($request->query('is_active', null) !== null) {
+        if ($request->query('is_available', null) !== null) {
 
-            $isActive = (bool)$request->query('is_active');
+            $isActive = (bool)$request->query('is_available');
             if ($isActive) {
-                $products = $products->where('is_active', '=', true);
+                $products = $products->where('is_available', '=', true);
             } else {
-                $products = $products->where('is_active', '=', false);
+                $products = $products->where('is_available', '=', false);
             }
         }
 

@@ -18,6 +18,10 @@ class CreateProductTable extends Migration
             $table->timestamps();
 
             $table->string('name', 150)
+                ->nullable(true)
+                ->default('');
+
+            $table->string('article', 50)
                 ->nullable(false);
 
             $table->text('description')
@@ -46,8 +50,7 @@ class CreateProductTable extends Migration
                 ->nullable(false)
                 ->default(0);
 
-            $table->boolean('is_active')
-                ->nullable(false)
+            $table->boolean('is_available')
                 ->default(true);
 
         });

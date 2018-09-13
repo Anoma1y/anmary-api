@@ -24,6 +24,7 @@ class ProductCollection extends ResourceCollection {
             return [
                 'id' => (int)$product->id,
                 'name' => (string)$product->name,
+                'article' => (string)$product->article,
                 'price' => (int)$product->price,
                 'discount' => (int)$product->discount,
                 'total_price' => Calculate::calculateDiscount((int)$product->price, (int)$product->discount),
@@ -34,7 +35,7 @@ class ProductCollection extends ResourceCollection {
                 'season' => new SeasonResource(Season::find((int)$product->season_id)),
                 'composition' => CompoundsCollectionResource::collection($product->compounds),
                 'sizes' => ProportionCollectionResource::collection($product->proportions),
-                'is_active' => $product->is_active,
+                'is_available' => $product->is_available,
                 'created_at' => (new Carbon($product->created_at))->getTimestamp(),
                 'updated_at' => (new Carbon($product->updated_at))->getTimestamp(),
             ];

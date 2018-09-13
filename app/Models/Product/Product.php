@@ -15,13 +15,14 @@ class Product extends Model
 {
     protected $fillable = [
         'name',
+        'article',
         'description',
         'category_id',
         'brand_id',
         'season_id',
         'price',
         'discount',
-        'is_active'
+        'is_available'
     ];
 
     public function category() {

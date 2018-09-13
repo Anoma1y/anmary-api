@@ -39,7 +39,7 @@ class CategoryController extends Controller {
 
         $category = Category::create([
             'name' => $request->post('name'),
-            'description' => $request->post('description', null)
+            'description' => $request->post('description', '')
         ]);
 
         return response(new CategoryResource($category), Response::HTTP_CREATED);
