@@ -14,6 +14,7 @@ class CategoryController extends Controller {
     public function GET_Category(Request $request) {
 
         $categories = Category::where('id', '!=', 0);
+
         if ($request->get('name', false)) {
             $categories = $categories->where('name', 'like', '%' . $request->get('name') . '%');
         }

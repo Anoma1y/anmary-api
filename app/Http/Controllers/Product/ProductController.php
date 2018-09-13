@@ -26,7 +26,8 @@ class ProductController extends Controller {
             'season_id' => 'required|integer',
             'composition' => 'required|array|min:1',
             'image' => 'required|array|min:1',
-            'size' => 'required|array|min:1'
+            'size' => 'required|array|min:1',
+            'is_active' => 'boolean|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -36,13 +37,14 @@ class ProductController extends Controller {
         }
 
         $product = new Product();
-        $product->name = $request->post('name', $product->name);
-        $product->description = $request->post('description', $product->description);
-        $product->category_id = $request->post('category_id', $product->category_id);
-        $product->brand_id = $request->post('brand_id', $product->brand_id);
-        $product->season_id = $request->post('season_id', $product->season_id);
-        $product->price = $request->post('price', $product->price);
-        $product->discount = $request->post('discount', $product->discount);
+        $product->name = $request->post('name');
+        $product->description = $request->post('description');
+        $product->category_id = $request->post('category_id');
+        $product->brand_id = $request->post('brand_id');
+        $product->season_id = $request->post('season_id');
+        $product->price = $request->post('price');
+        $product->discount = $request->post('discount');
+        $product->is_active = $request->post('is_active', true);
 
         $product->save();
         $product = $product->fresh();
@@ -142,7 +144,8 @@ class ProductController extends Controller {
             'season_id' => 'required|integer',
             'composition' => 'required|array|min:1',
             'image' => 'required|array|min:1',
-            'size' => 'required|array|min:1'
+            'size' => 'required|array|min:1',
+            'is_active' => 'boolean|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -158,6 +161,7 @@ class ProductController extends Controller {
         $product->season_id = $request->post('season_id', $product->season_id);
         $product->price = $request->post('price', $product->price);
         $product->discount = $request->post('discount', $product->discount);
+        $product->is_active = $request->post('is_active', $product->is_active);
 
 
         if ($request->post('image', false)) {
@@ -245,6 +249,7 @@ class ProductController extends Controller {
             'brand' => 'integer|nullable',
             'category' => 'integer|nullable',
             'season' => 'integer|nullable',
+            'is_active' => 'boolean|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -262,6 +267,16 @@ class ProductController extends Controller {
 
         if ($request->query('sum_to', false)) {
             $products = $products->where('price', '<=', (int)$input['sum_to']);
+        }
+
+        if ($request->query('is_active', null) !== null) {
+
+            $isActive = (bool)$request->query('is_active');
+            if ($isActive) {
+                $products = $products->where('is_active', '=', true);
+            } else {
+                $products = $products->where('is_active', '=', false);
+            }
         }
 
         if ($request->query('has_discount', null) !== null) {
@@ -300,14 +315,21 @@ class ProductController extends Controller {
 
         $productsTotal = $products->count();
 
+        $productsMaxPrice = $products->max('price');
+        $productsMinPrice = $products->min('price');
+
         $products = $products->orderBy('created_at', 'desc')
             ->skip(($page) * $numOnPage)
             ->take($numOnPage);
+
+
 
         return response([
             'records' => new ProductCollectionResource($products->get()),
             'total_records' => $productsTotal,
             'page' => $page,
+            'max_price' => $productsMaxPrice,
+            'min_price' => $productsMinPrice,
             'num_on_page' => $numOnPage
         ], Response::HTTP_OK);
 

@@ -46,6 +46,10 @@ class CreateProductTable extends Migration
                 ->nullable(false)
                 ->default(0);
 
+            $table->boolean('is_active')
+                ->nullable(false)
+                ->default(true);
+
         });
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Product;
 
-use App\Http\Resources\Image\Image as ImageResource;
+use App\Http\Resources\Image\ImageCollection;
 use Carbon\Carbon;
 use App\Http\Resources\Compounds\CompoundsCollection as CompoundsCollectionResource;
 use App\Http\Resources\Proportion\ProportionCollection as ProportionCollectionResource;
@@ -11,7 +11,6 @@ use App\Http\Resources\Category\Category as CategoryResource;
 use App\Http\Resources\Brand\Brand as BrandResource;
 use App\Http\Resources\Season\Season as SeasonResource;
 
-use App\Models\Image\Image;
 use App\Models\Category\Category;
 use App\Models\Brand\Brand;
 use App\Models\Season\Season;
@@ -29,12 +28,13 @@ class ProductCollection extends ResourceCollection {
                 'discount' => (int)$product->discount,
                 'total_price' => Calculate::calculateDiscount((int)$product->price, (int)$product->discount),
                 'description' => (string)$product->description,
-                'image' => new ImageResource(Image::find((int)$product->image_id)),
+                'images' => ImageCollection::collection($product->images),
                 'category' => new CategoryResource(Category::find((int)$product->category_id)),
                 'brand' => new BrandResource(Brand::find((int)$product->brand_id)),
                 'season' => new SeasonResource(Season::find((int)$product->season_id)),
                 'composition' => CompoundsCollectionResource::collection($product->compounds),
                 'sizes' => ProportionCollectionResource::collection($product->proportions),
+                'is_active' => $product->is_active,
                 'created_at' => (new Carbon($product->created_at))->getTimestamp(),
                 'updated_at' => (new Carbon($product->updated_at))->getTimestamp(),
             ];

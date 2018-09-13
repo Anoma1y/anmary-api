@@ -4,7 +4,6 @@ namespace App\Http\Resources\Product;
 
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Image\Image as ImageResource;
 use App\Http\Resources\Category\Category as CategoryResource;
 use App\Http\Resources\Brand\Brand as BrandResource;
 use App\Http\Resources\Season\Season as SeasonResource;
@@ -12,7 +11,6 @@ use App\Http\Resources\Compounds\CompoundsCollection;
 use App\Http\Resources\Proportion\ProportionCollection;
 use App\Http\Resources\Image\ImageCollection;
 
-use App\Models\Image\Image;
 use App\Models\Category\Category;
 use App\Models\Brand\Brand;
 use App\Models\Season\Season;
@@ -35,6 +33,7 @@ class Product extends JsonResource {
             'season' => new SeasonResource(Season::find((int)$this->season_id)),
             'compositions' => CompoundsCollection::collection($this->compounds),
             'sizes' => ProportionCollection::collection($this->proportions),
+            'is_active' => $this->is_active,
             'created_at' => (new Carbon($this->created_at))->getTimestamp(),
             'updated_at' => (new Carbon($this->updated_at))->getTimestamp(),
         ];

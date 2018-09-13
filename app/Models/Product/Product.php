@@ -20,7 +20,8 @@ class Product extends Model
         'brand_id',
         'season_id',
         'price',
-        'discount'
+        'discount',
+        'is_active'
     ];
 
     public function category() {
