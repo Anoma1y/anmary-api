@@ -3,7 +3,6 @@
 namespace App\Http\Resources\Category;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\DB;
 
 class Category extends JsonResource {
     public function toArray($request) {
