@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Category;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 
 class Category extends JsonResource {
     public function toArray($request) {
@@ -10,6 +11,15 @@ class Category extends JsonResource {
             'id' => $this->id,
             'name' => $this->name,
             'description' => (string)$this->description,
+            'count' =>
+                $this
+                    ->select('products.id')
+                    ->from('categories')
+                    ->join('products', 'categories.id', '=', 'products.category_id')
+                    ->where('categories.id', $this->id)
+                    ->get()
+                    ->count()
+
         ];
     }
 }
