@@ -42,8 +42,9 @@ Route::group([
     Route::post('/season', 'Season\SeasonController@POST_Season');
     Route::patch('/season/{season_id}', 'Season\SeasonController@PATCH_SeasonSingle');
 
-    // Category
+    // News
     Route::get('/news', 'News\NewsController@GET_News');
+    Route::get('/news/{news_id}', 'News\NewsController@GET_NewsSingle');
     Route::post('/news', 'News\NewsController@POST_News');
     Route::patch('/news/{news_id}', 'News\NewsController@PATCH_NewsSingle');
 

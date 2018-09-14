@@ -21,6 +21,15 @@ class NewsController extends Controller {
         return response(NewsResource::collection($news->get()), Response::HTTP_OK);
     }
 
+    public function GET_NewsSingle(Request $request) {
+        try {
+            $product = News::findOrFail((int)$request->route('news_id'));
+            return response(new NewsResource($product), Response::HTTP_OK);
+        } catch (ModelNotFoundException $e) {
+            return response(null, Response::HTTP_NOT_FOUND);
+        }
+    }
+
     public function POST_News(Request $request) {
 
         if (!Auth::user()->hasRole('root')) {
