@@ -12,7 +12,7 @@ class Calculate {
 
         $total_price = round($price - ($price * ($discount / 100)));
 
-        return $total_price;
+        return round($total_price);
 
     }
 }
