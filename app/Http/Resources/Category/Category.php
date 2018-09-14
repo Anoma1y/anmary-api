@@ -10,7 +10,7 @@ class Category extends JsonResource {
             'id' => $this->id,
             'name' => $this->name,
             'description' => (string)$this->description,
-            'count' =>
+            'products_count' =>
                 $this
                     ->select('products.id')
                     ->from('categories')
@@ -18,7 +18,6 @@ class Category extends JsonResource {
                     ->where('categories.id', $this->id)
                     ->get()
                     ->count()
-
         ];
     }
 }

@@ -9,7 +9,15 @@ class Season extends JsonResource {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description
+            'description' => $this->description,
+            'products_count' =>
+                $this
+                    ->select('products.id')
+                    ->from('seasons')
+                    ->join('products', 'seasons.id', '=', 'products.season_id')
+                    ->where('seasons.id', $this->id)
+                    ->get()
+                    ->count()
         ];
     }
 }

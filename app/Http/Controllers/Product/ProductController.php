@@ -138,16 +138,16 @@ class ProductController extends Controller {
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'string',
-            'article' => 'required|min:1|string',
-            'discount' => 'integer|between:0,100',
-            'price' => 'required|integer|min:0|max:100000000',
-            'category_id' => 'required|integer',
-            'brand_id' => 'required|integer',
-            'season_id' => 'required|integer',
-            'composition' => 'required|array|min:1',
-            'image' => 'required|array|min:1',
-            'size' => 'required|array|min:1',
+            'name' => 'string|nullable',
+            'article' => 'min:1|string|nullable',
+            'discount' => 'integer|between:0,100|nullable',
+            'price' => 'integer|min:0|max:100000000|nullable',
+            'category_id' => 'integer|nullable',
+            'brand_id' => 'integer|nullable',
+            'season_id' => 'integer|nullable',
+            'composition' => 'array|min:1|nullable',
+            'image' => 'array|min:1|nullable',
+            'size' => 'array|min:1|nullable',
             'is_available' => 'boolean|nullable'
         ]);
 

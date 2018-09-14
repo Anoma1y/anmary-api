@@ -8,7 +8,7 @@ class ProportionCollection extends JsonResource {
     public function toArray($request) {
         return [
             'id' => $this->id,
-            'size_id' => $this->size->id,
+            'size_id' => $this->size->id
         ];
     }
 }

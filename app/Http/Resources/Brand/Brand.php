@@ -10,7 +10,15 @@ class Brand extends JsonResource {
             'id' => $this->id,
             'name' => $this->name,
             'description' => (string)$this->description,
-            'country' => $this->country
+            'country' => $this->country,
+            'products_count' =>
+                $this
+                    ->select('products.id')
+                    ->from('brands')
+                    ->join('products', 'brands.id', '=', 'products.brand_id')
+                    ->where('brands.id', $this->id)
+                    ->get()
+                    ->count()
         ];
     }
 }
