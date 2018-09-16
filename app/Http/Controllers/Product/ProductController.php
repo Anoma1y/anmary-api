@@ -351,7 +351,10 @@ class ProductController extends Controller {
     public function GET_ProductRandom(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'limit' => 'integer|min:1|max:20'
+            'limit' => 'integer|min:1|max:20',
+            'has_discount' => 'boolean|nullable',
+            'is_available' => 'boolean|nullable',
+            'is_random' => 'boolean|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -369,13 +372,39 @@ class ProductController extends Controller {
             $limit = (int)$input['limit'];
         }
 
-        return response(new ProductCollectionResource(
+        if ($request->query('is_available', null) !== null) {
+
+            $isActive = (bool)$request->query('is_available');
+            if ($isActive) {
+                $products = $products->where('is_available', '=', true);
+            } else {
+                $products = $products->where('is_available', '=', false);
+            }
+        }
+
+        if ($request->query('has_discount', null) !== null) {
+
+            $hasDiscount = (bool)$request->query('has_discount');
+            if ($hasDiscount) {
+                $products = $products->where('discount', '>', 0);
+            } else {
+                $products = $products->where('discount', '=', 0);
+            }
+        }
+
+        if ($request->query('is_random', null) !== null) {
             $products
-                ->inRandomOrder(5)
-                ->limit($limit)
-                ->get()),
-            Response::HTTP_OK
-        );
+                ->inRandomOrder()
+                ->limit($limit);
+        } else {
+            $products
+                ->limit($limit);
+        }
+
+        return response(new ProductCollectionResource(
+            $products->get()
+
+        ),Response::HTTP_OK);
     }
 
 }
