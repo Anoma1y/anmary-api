@@ -322,7 +322,11 @@ class ProductController extends Controller {
         $productsMaxPrice = $products->max('price');
         $productsMinPrice = $products->min('price');
 
-        $products = $products->orderBy('created_at', 'desc')
+        $sortingOrder = (string)$request->query('sort', 'desc');
+        $typeOrder = (string)$request->query('type_order', 'created_at');
+
+        $products = $products
+            ->orderBy($typeOrder, $sortingOrder)
             ->skip(($page) * $numOnPage)
             ->take($numOnPage);
 
