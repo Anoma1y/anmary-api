@@ -25,6 +25,8 @@ Route::group([
 
     // Image
     Route::post('/image', 'Image\ImageController@POST_Image');
+    Route::post('/image/{image_id}', 'Image\ImageController@POST_ImageSetDefault');
+    Route::post('/image/{image_id_old}/{image_id_new}', 'Image\ImageController@POST_ImageChangeDefault');
     Route::get('/image/{image_id}', 'Image\ImageController@GET_ImageSingle');
 
     // Category

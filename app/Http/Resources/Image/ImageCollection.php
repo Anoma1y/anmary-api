@@ -12,6 +12,7 @@ class ImageCollection extends JsonResource {
             'extension' => $this->extension,
             'size' => $this->size,
             'original_uri' => $this->original_uri,
+            'is_default' => $this->is_default,
             'created_at' => (new Carbon($this->created_at))->getTimestamp(),
             'updated_at' => (new Carbon($this->updated_at))->getTimestamp()
         ];

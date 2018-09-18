@@ -66,4 +66,45 @@ class ImageController extends Controller {
             return response(null, Response::HTTP_NOT_FOUND);
         }
     }
+
+    public function POST_ImageSetDefault(Request $request) {
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
+        try {
+
+            $image = Image::findOrFail((int)$request->route('image_id'));
+            $image->is_default = true;
+            $image->save();
+
+            return response(new ImageResource($image), Response::HTTP_OK);
+        } catch (ModelNotFoundException $e) {
+            return response(null, Response::HTTP_NOT_FOUND);
+        }
+    }
+
+    public function POST_ImageChangeDefault(Request $request) {
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+
+        try {
+
+            $image_old = Image::findOrFail((int)$request->route('image_id_old'));
+            $image_old->is_default = false;
+            $image_old->save();
+
+            $image_new = Image::findOrFail((int)$request->route('image_id_new'));
+            $image_new->is_default = true;
+            $image_new->save();
+
+            return response([
+                'old_image' => new ImageResource($image_old),
+                'new_image' => new ImageResource($image_new)
+            ], Response::HTTP_OK);
+        } catch (ModelNotFoundException $e) {
+            return response(null, Response::HTTP_NOT_FOUND);
+        }
+    }
 }

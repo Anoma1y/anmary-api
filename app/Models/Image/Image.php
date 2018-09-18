@@ -10,6 +10,7 @@ class Image extends Model {
         'extension',
         'size',
         'original_uri',
-        'preview_uri'
+        'preview_uri',
+        'is_default'
     ];
 }
