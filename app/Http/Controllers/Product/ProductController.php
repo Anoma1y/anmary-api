@@ -250,9 +250,6 @@ class ProductController extends Controller {
             'sum_from' => 'integer|min:1|nullable',
             'sum_to' => 'integer|min:1|nullable',
             'price' => 'integer|min:0|max:1000000|nullable',
-            'brand' => 'integer|nullable',
-            'category' => 'integer|nullable',
-            'season' => 'integer|nullable',
             'is_available' => 'boolean|nullable'
         ]);
 
@@ -314,6 +311,24 @@ class ProductController extends Controller {
             $products = $products->whereIn('brand_id', $brand);
         }
 
+        if ($request->query('sizes', false)) {
+            $sizes = array_map(function ($element) {
+                return (int)$element;
+            }, explode(',', $request->query('sizes')));
+            $products = $products->whereHas('proportions', function($q) use($sizes) {
+                $q->whereIn('size_id', $sizes);
+            });
+        }
+
+        if ($request->query('compositions', false)) {
+            $compositions = array_map(function ($element) {
+                return (int)$element;
+            }, explode(',', $request->query('compositions')));
+            $products = $products->whereHas('compounds', function($q) use($compositions) {
+                $q->whereIn('composition_id', $compositions);
+            });
+        }
+
         $numOnPage = (int)$request->query('num_on_page', 10);
         $page = (int)$request->query('page', 0);
 
@@ -352,7 +367,7 @@ class ProductController extends Controller {
         }
     }
 
-    public function GET_ProductRandom(Request $request) {
+    public function GET_ProductV1(Request $request) {
 
         $validator = Validator::make($request->all(), [
             'limit' => 'integer|min:1|max:20',
@@ -405,8 +420,13 @@ class ProductController extends Controller {
                 ->limit($limit);
         }
 
+        $sortingOrder = (string)$request->query('sort', 'desc');
+        $typeOrder = (string)$request->query('type_order', 'created_at');
+
         return response(new ProductCollectionResource(
-            $products->get()
+            $products
+                ->orderBy($typeOrder, $sortingOrder)
+                ->get()
 
         ),Response::HTTP_OK);
     }
