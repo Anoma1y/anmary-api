@@ -329,7 +329,7 @@ class ProductController extends Controller {
             });
         }
 
-        $numOnPage = (int)$request->query('num_on_page', 10);
+        $numOnPage = (int)$request->query('num_on_page', 9);
         $page = (int)$request->query('page', 0);
 
         $productsTotal = $products->count();
@@ -430,5 +430,4 @@ class ProductController extends Controller {
 
         ),Response::HTTP_OK);
     }
-
 }
