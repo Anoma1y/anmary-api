@@ -8,7 +8,7 @@ class Subscribe extends JsonResource {
     public function toArray($request) {
         return [
             'id' => $this->id,
-            'email' => $this->email,
+            'contact_address' => $this->contact_address,
             'is_active' => $this->is_active
         ];
     }

@@ -16,7 +16,7 @@ class CreateSubscribeTable extends Migration
         Schema::create('subscribes', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('email', 255)
+            $table->string('contact_address', 255)
                 ->nullable(false)
                 ->unique();
             $table->boolean('is_active')

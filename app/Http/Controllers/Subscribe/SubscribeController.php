@@ -14,7 +14,7 @@ class SubscribeController extends Controller {
     public function POST_Subscribe(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|string|min:1|max:255',
+            'contact_address' => 'required|string|min:1|max:255',
         ]);
         if ($validator->fails()) {
             return response([
@@ -23,7 +23,7 @@ class SubscribeController extends Controller {
         }
 
         $subscribe = Subscribe::create([
-            'email' => $request->post('email')
+            'contact_address' => $request->post('contact_address')
         ]);
 
         return response(new SubscribeResource($subscribe), Response::HTTP_CREATED);

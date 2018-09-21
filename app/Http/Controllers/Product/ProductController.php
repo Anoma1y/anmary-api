@@ -281,9 +281,18 @@ class ProductController extends Controller {
         }
 
         if ($request->query('has_discount', null) !== null) {
-
             $hasDiscount = (bool)$request->query('has_discount');
             if ($hasDiscount) {
+                $products = $products->where('discount', '>', 0);
+            } else {
+                $products = $products->where('discount', '=', 0);
+            }
+        }
+
+        if ($request->query('last_season', null) !== null) {
+            $hasDiscount = (bool)$request->query('has_discount');
+            if ($hasDiscount) {
+                $products = $products->where('price', '<=', (int)$input['sum_to']);
                 $products = $products->where('discount', '>', 0);
             } else {
                 $products = $products->where('discount', '=', 0);
@@ -403,9 +412,9 @@ class ProductController extends Controller {
 
         if ($request->query('has_discount', null) !== null) {
 
-            $hasDiscount = (bool)$request->query('has_discount');
-            if ($hasDiscount) {
-                $products = $products->where('discount', '>', 0);
+            $lastSeason = (bool)$request->query('has_discount');
+            if ($lastSeason) {
+                $products = $products->where('season', '>', 0);
             } else {
                 $products = $products->where('discount', '=', 0);
             }
