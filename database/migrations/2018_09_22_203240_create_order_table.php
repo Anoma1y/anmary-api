@@ -25,6 +25,9 @@ class CreateOrderTable extends Migration
             $table->string('contact_detail')
                 ->nullable(true)
                 ->default('');
+            $table->boolean('is_completed')
+                ->nullable(true)
+                ->default(false);
 
             $table->foreign('user_id')
                 ->references('id')

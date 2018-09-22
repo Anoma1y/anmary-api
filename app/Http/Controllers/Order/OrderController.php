@@ -9,10 +9,25 @@ use App\Models\Product\Product;
 use App\Models\Order\Order;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends Controller {
     public function POST_Order(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'contact_name' => 'nullable|string|min:1|max:100',
+            'contact_detail' => 'nullable|string|min:1|max:100',
+            'user_id' => 'nullable|integer|min:1',
+            'products' => 'required|array',
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'validation' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $order = new Order();
         $order->contact_name = $request->post('contact_name', '');
         $order->contact_detail = $request->post('contact_detail', '');
@@ -50,8 +65,27 @@ class OrderController extends Controller {
     }
 
     public function GET_Order(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'is_completed' => 'boolean|nullable'
+        ]);
+
+        if ($validator->fails()) {
+            return response([
+                'validation' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
         $orders = Order::where('id', '!=', 0);
+
+        if ($request->query('is_completed', null) !== null) {
+
+            $isActive = (bool)$request->query('is_completed');
+            if ($isActive) {
+                $orders = $orders->where('is_completed', '=', true);
+            } else {
+                $orders = $orders->where('is_completed', '=', false);
+            }
+        }
 
         $numOnPage = (int)$request->query('num_on_page', 9);
         $page = (int)$request->query('page', 0);

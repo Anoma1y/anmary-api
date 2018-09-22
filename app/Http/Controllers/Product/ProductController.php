@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller {
     public function POST_Product(Request $request) {
-
         $validator = Validator::make($request->all(), [
             'name' => 'string',
             'article' => 'required|min:1|string',
