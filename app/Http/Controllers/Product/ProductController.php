@@ -263,11 +263,12 @@ class ProductController extends Controller {
         $input = $request->query();
 
         if ($request->query('sum_from', false)) {
-            $products = $products->where('price', '>=', (int)$input['sum_from']);
+            // todo потестить
+            $products = $products->whereRaw('price <= '.$input['sum_from'].' + (price * (discount/100.0))');
         }
 
         if ($request->query('sum_to', false)) {
-            $products = $products->where('price', '<=', (int)$input['sum_to']);
+            $products = $products->whereRaw('price <= '.$input['sum_to'].' + (price * (discount/100.0))');
         }
 
         if ($request->query('is_available', null) !== null) {

@@ -16,6 +16,11 @@ Route::group([
     'middleware' => ['api']
 ], function () {
 
+    // Order
+    Route::post('/order', 'Order\OrderController@POST_Order');
+    Route::get('/order', 'Order\OrderController@GET_Order');
+    Route::get('/order/{order_id}', 'Order\OrderController@GET_OrderSingle');
+
     // Product
     Route::post('/product', 'Product\ProductController@POST_Product');
     Route::get('/product', 'Product\ProductController@GET_Product');
