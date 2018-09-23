@@ -21,6 +21,9 @@ class CreateImagesTable extends Migration
             $table->bigInteger('size')->nullable(false);
             $table->string('original_uri', 255)->nullable(false);
             $table->string('preview_uri', 255)->nullable(false);
+            $table->boolean('is_default')
+                ->nullable(true)
+                ->default(false);
         });
     }
 
