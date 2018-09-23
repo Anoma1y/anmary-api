@@ -92,4 +92,8 @@ Route::group([
     // Subscribe
     Route::post('/subscribe', 'Subscribe\SubscribeController@POST_Subscribe');
 
+    // Feedback
+    Route::post('/feedback', 'Feedback\FeedbackController@POST_Feedback');
+    Route::get('/feedback', 'Feedback\FeedbackController@GET_Feedback');
+
 });
