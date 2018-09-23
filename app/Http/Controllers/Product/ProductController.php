@@ -263,7 +263,7 @@ class ProductController extends Controller {
 
         if ($request->query('sum_from', false)) {
             // todo потестить
-            $products = $products->whereRaw('price <= '.$input['sum_from'].' + (price * (discount/100.0))');
+            $products = $products->whereRaw('price >= '.$input['sum_from'].' + (price * (discount/100.0))');
         }
 
         if ($request->query('sum_to', false)) {
@@ -320,21 +320,21 @@ class ProductController extends Controller {
             $products = $products->whereIn('brand_id', $brand);
         }
 
-        if ($request->query('sizes', false)) {
-            $sizes = array_map(function ($element) {
+        if ($request->query('size', false)) {
+            $size = array_map(function ($element) {
                 return (int)$element;
-            }, explode(',', $request->query('sizes')));
-            $products = $products->whereHas('proportions', function($q) use($sizes) {
-                $q->whereIn('size_id', $sizes);
+            }, explode(',', $request->query('size')));
+            $products = $products->whereHas('proportions', function($q) use($size) {
+                $q->whereIn('size_id', $size);
             });
         }
 
-        if ($request->query('compositions', false)) {
-            $compositions = array_map(function ($element) {
+        if ($request->query('composition', false)) {
+            $composition = array_map(function ($element) {
                 return (int)$element;
-            }, explode(',', $request->query('compositions')));
-            $products = $products->whereHas('compounds', function($q) use($compositions) {
-                $q->whereIn('composition_id', $compositions);
+            }, explode(',', $request->query('composition')));
+            $products = $products->whereHas('compounds', function($q) use($composition) {
+                $q->whereIn('composition_id', $composition);
             });
         }
 
