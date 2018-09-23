@@ -14,7 +14,7 @@ class FeedbackController extends Controller {
     public function POST_Feedback(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'contact_name' => 'nullable|string|min:1|max:100',
+            'contact_name' => 'nullable|string|max:100',
             'contact_address' => 'required|string|min:1|max:255',
             'text' => 'required|string|min:5',
         ]);

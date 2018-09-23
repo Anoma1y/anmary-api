@@ -17,7 +17,7 @@ class CreateFeedbackTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('contact_name', 150)
-                ->nullable(false);
+                ->nullable(true);
             $table->string('contact_address', 255)
                 ->nullable(false);
             $table->text('text')
