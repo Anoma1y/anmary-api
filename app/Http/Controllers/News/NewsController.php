@@ -63,9 +63,10 @@ class NewsController extends Controller {
         }
 
         try {
-            $category = News::findOrFail((int)$request->route('category_id'));
+            $category = News::findOrFail((int)$request->route('news_id'));
             $category->name = $request->post('name', $category->name);
-            $category->description = $request->post('description', $category->description);
+            $category->content = $request->post('content', $category->content);
+            $category->image_id = $request->post('image_id', $category->image_id);
             $category->save();
 
             return response(new NewsResource($category), Response::HTTP_OK);
