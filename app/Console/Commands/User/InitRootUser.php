@@ -25,8 +25,8 @@ class InitRootUser extends Command {
             $rootRole = Role::where('name', Role::ROOT_ROLE_NAME)->firstOrFail();
 
             $user = User::create([
-                'name' => 'root',
-                'email' => 'root@example.com',
+                'name' => 'Администратор',
+                'email' => 'admin@anmary.ru',
                 'password' => bcrypt($this->argument('password'))
             ]);
             Profile::create([
