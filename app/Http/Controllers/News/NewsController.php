@@ -14,11 +14,19 @@ class NewsController extends Controller {
     public function GET_News(Request $request) {
 
         $news = News::where('id', '!=', 0);
+
         if ($request->get('name', false)) {
             $news = $news->where('name', 'like', '%' . $request->get('name') . '%');
         }
 
-        return response(NewsResource::collection($news->get()), Response::HTTP_OK);
+        return response(
+            NewsResource::collection(
+                $news
+                    ->orderBy('created_at', 'desc')
+                    ->get()
+            ),
+            Response::HTTP_OK
+        );
     }
 
     public function GET_NewsSingle(Request $request) {
