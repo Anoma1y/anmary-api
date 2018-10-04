@@ -23,8 +23,8 @@ class NewsController extends Controller {
 
     public function GET_NewsSingle(Request $request) {
         try {
-            $product = News::findOrFail((int)$request->route('news_id'));
-            return response(new NewsResource($product), Response::HTTP_OK);
+            $news = News::findOrFail((int)$request->route('news_id'));
+            return response(new NewsResource($news), Response::HTTP_OK);
         } catch (ModelNotFoundException $e) {
             return response(null, Response::HTTP_NOT_FOUND);
         }
@@ -63,16 +63,31 @@ class NewsController extends Controller {
         }
 
         try {
-            $category = News::findOrFail((int)$request->route('news_id'));
-            $category->name = $request->post('name', $category->name);
-            $category->content = $request->post('content', $category->content);
-            $category->image_id = $request->post('image_id', $category->image_id);
-            $category->save();
+            $news = News::findOrFail((int)$request->route('news_id'));
+            $news->name = $request->post('name', $news->name);
+            $news->content = $request->post('content', $news->content);
+            $news->image_id = $request->post('image_id', $news->image_id);
+            $news->save();
 
-            return response(new NewsResource($category), Response::HTTP_OK);
+            return response(new NewsResource($news), Response::HTTP_OK);
         } catch (ModelNotFoundException $e) {
             return response(null, Response::HTTP_NOT_FOUND);
         }
+    }
+
+    public function DELETE_NewsSingle(Request $request) {
+        if (!Auth::user()->hasRole('root')) {
+            return response(null, Response::HTTP_FORBIDDEN);
+        }
+        try {
+            $news = News::findOrFail((int)$request->route('news_id'));
+            $news->delete();
+
+            return response(null, Response::HTTP_OK);
+        } catch (ModelNotFoundException $e) {
+            return response(null, Response::HTTP_NOT_FOUND);
+        }
+
     }
 
 }

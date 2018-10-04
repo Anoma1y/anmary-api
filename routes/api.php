@@ -54,6 +54,7 @@ Route::group([
     Route::get('/news/{news_id}', 'News\NewsController@GET_NewsSingle');
     Route::post('/news', 'News\NewsController@POST_News');
     Route::patch('/news/{news_id}', 'News\NewsController@PATCH_NewsSingle');
+    Route::delete('/news/{news_id}', 'News\NewsController@DELETE_NewsSingle');
 
     // Composition
     Route::get('/composition', 'Composition\CompositionController@GET_Composition');
