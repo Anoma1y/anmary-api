@@ -246,10 +246,11 @@ class ProductController extends Controller {
 
     public function GET_Product(Request $request) {
         $validator = Validator::make($request->all(), [
-            'sum_from' => 'integer|min:1|nullable',
+            'sum_from' => 'integer|min:0|nullable',
             'sum_to' => 'integer|min:1|nullable',
             'price' => 'integer|min:0|max:1000000|nullable',
-            'is_available' => 'boolean|nullable'
+            'is_available' => 'boolean|nullable',
+            'search' => 'string|nullable|min:1|max:100'
         ]);
 
         if ($validator->fails()) {
@@ -338,12 +339,20 @@ class ProductController extends Controller {
             });
         }
 
+        if ($request->query('search', false)) {
+            $products = $products
+                ->where('article',  'like', '%'.$input['search'].'%')
+                ->orWhere('name',  'like', '%'.$input['search'].'%')
+                ->orWhere('description',  'like', '%'.$input['search'].'%');
+        }
+
         $numOnPage = (int)$request->query('num_on_page', 9);
         $page = (int)$request->query('page', 0);
 
         $productsTotal = $products->count();
 
         $productsMaxPrice = $products->max('price');
+
         $productsMinPrice = $products->min('price');
 
         $sortingOrder = (string)$request->query('sort', 'desc');
