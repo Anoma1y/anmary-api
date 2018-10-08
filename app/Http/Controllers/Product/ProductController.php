@@ -340,10 +340,11 @@ class ProductController extends Controller {
         }
 
         if ($request->query('search', false)) {
+	    $search_text = $input['search']; 
             $products = $products
-                ->where('article',  'like', '%'.$input['search'].'%')
-                ->orWhere('name',  'like', '%'.$input['search'].'%')
-                ->orWhere('description',  'like', '%'.$input['search'].'%');
+                ->where('article',  'ilike', '%'.$input['search'].'%')
+                ->orWhere('name',  'ilike', '%'.$search_text.'%')
+                ->orWhere('description',  'ilike', '%'.$input['search'].'%');
         }
 
         $numOnPage = (int)$request->query('num_on_page', 9);
