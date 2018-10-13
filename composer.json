@@ -14,6 +14,8 @@
         "phpoffice/phpspreadsheet": "^1.4",
         "predis/predis": "^1.1",
         "sentry/sentry-laravel": "^0.9.1",
+        "spatie/flysystem-dropbox": "^1.0",
+        "spatie/laravel-backup": "^5.10",
         "tymon/jwt-auth": "^1.0.0",
         "zizaco/entrust": "5.2.x-dev"
     },
