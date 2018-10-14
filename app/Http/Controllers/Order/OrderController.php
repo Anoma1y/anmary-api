@@ -6,11 +6,14 @@ use App\Http\Resources\Order\Order as OrderResource;
 use App\Http\Resources\Order\OrderCollection as OrderCollectionResource;
 use App\Http\Controllers\Controller;
 use App\Models\Product\Product;
+use App\Models\Proportion\Proportion;
+use App\Http\Resources\Proportion\ProportionOrder as ProportionOrderResource;
 use App\Models\Order\Order;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller {
     public function POST_Order(Request $request) {
@@ -46,8 +49,8 @@ class OrderController extends Controller {
             $products = array_unique($request->post('products', []));
             try {
                 foreach ($products as $productId) {
-                    $product = Product::findOrFail((int)$productId);
-                    $productsCollection[] = $product;
+                    $product = Proportion::findOrFail((int)$productId);
+                    $productsCollection[] = new ProportionOrderResource($product);
                 }
             } catch (ModelNotFoundException $e) {
                 return response(null, Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -56,12 +59,14 @@ class OrderController extends Controller {
             $order->products()->detach();
 
             foreach ($productsCollection as $product) {
-                $order->attachProducts($product->id);
+                $product_id = DB::table('products_proportion')->select('product_id')->where('proportion_id', $product->id)->first()->product_id;
+                $order->attachProducts($product_id, $product->size_id);
             }
+
+
         }
-
-
         return response(new OrderResource($order->fresh()), Response::HTTP_CREATED);
+
     }
 
     public function GET_Order(Request $request) {

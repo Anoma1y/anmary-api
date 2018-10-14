@@ -25,9 +25,11 @@ class Order extends Model
         );
     }
 
-    public function attachProducts($product_id) {
+    public function attachProducts($product_id, $size_id) {
         DB::table('orders_products')->insert([
-            'order_id' => $this->id, 'product_id' => $product_id
+            'order_id' => $this->id,
+            'product_id' => $product_id,
+            'size_id' => $size_id
         ]);
     }
 }

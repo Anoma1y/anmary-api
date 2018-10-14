@@ -364,8 +364,6 @@ class ProductController extends Controller {
             ->skip(($page) * $numOnPage)
             ->take($numOnPage);
 
-
-
         return response([
             'records' => new ProductCollectionResource($products->get()),
             'total_records' => $productsTotal,

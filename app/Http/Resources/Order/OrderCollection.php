@@ -24,6 +24,7 @@ class OrderCollection extends ResourceCollection {
                         ->count(),
                 'created_at' => (new Carbon($order->created_at))->getTimestamp(),
                 'updated_at' => (new Carbon($order->updated_at))->getTimestamp(),
+                'is_completed' => $order->is_completed
             ];
         }, $this->collection->toArray());
     }
