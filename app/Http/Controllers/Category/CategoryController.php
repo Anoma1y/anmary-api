@@ -29,6 +29,7 @@ class CategoryController extends Controller {
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:3',
+            'singular' => 'required|string|min:3',
             'description' => 'string|nullable'
         ]);
         if ($validator->fails()) {
@@ -39,6 +40,7 @@ class CategoryController extends Controller {
 
         $category = Category::create([
             'name' => $request->post('name'),
+            'singular' => $request->post('singular'),
             'description' => $request->post('description', '')
         ]);
 
@@ -53,6 +55,7 @@ class CategoryController extends Controller {
         try {
             $category = Category::findOrFail((int)$request->route('category_id'));
             $category->name = $request->post('name', $category->name);
+            $category->singular = $request->post('singular', $category->singular);
             $category->description = $request->post('description', $category->description);
             $category->save();
 

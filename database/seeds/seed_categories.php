@@ -19,6 +19,7 @@ class seed_categories extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'Платья',
+                'singular' => 'Платье',
                 'description' => '',
             ],
             [
@@ -26,6 +27,7 @@ class seed_categories extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'Сарафаны',
+                'singular' => 'Сарафан',
                 'description' => '',
             ],
             [
@@ -33,6 +35,7 @@ class seed_categories extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'Брюки',
+                'singular' => 'Брюки',
                 'description' => '',
             ],
             [
@@ -40,6 +43,7 @@ class seed_categories extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'Юбки',
+                'singular' => 'Юбка',
                 'description' => '',
             ],
             [
@@ -47,18 +51,21 @@ class seed_categories extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'Блузы',
+                'singular' => 'Блузка',
                 'description' => '',
             ],            [
                 'id' => 6,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'Кардиганы',
+                'singular' => 'Кардиган',
                 'description' => '',
             ],            [
                 'id' => 7,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'Пиджаки',
+                'singular' => 'Пиджак',
                 'description' => '',
             ],
             [
@@ -66,6 +73,7 @@ class seed_categories extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'Жакеты',
+                'singular' => 'Жакет',
                 'description' => '',
             ],
             [
@@ -73,6 +81,7 @@ class seed_categories extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'Палантины',
+                'singular' => 'Палантин',
                 'description' => '',
             ],
             [
@@ -80,6 +89,7 @@ class seed_categories extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'Кофты',
+                'singular' => 'Кофта',
                 'description' => '',
             ],
         ]);

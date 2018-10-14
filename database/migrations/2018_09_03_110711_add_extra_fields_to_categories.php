@@ -15,6 +15,7 @@ class AddExtraFieldsToCategories extends Migration
     {
         Schema::table('categories', function (Blueprint $table) {
             $table->string('name', 50)->nullable(false);
+            $table->string('singular', 50)->nullable(false);
             $table->string('description', 250)
                 ->nullable(true)
                 ->default(null);
