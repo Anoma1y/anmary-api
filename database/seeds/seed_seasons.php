@@ -46,7 +46,7 @@ class seed_seasons extends Seeder
                 'id' => 5,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'name' => 'ОСень - Зима 2016/2017',
+                'name' => 'Осень - Зима 2016/2017',
                 'description' => '',
             ],
 

@@ -158,7 +158,7 @@ class seed_brands extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'OLMAR',
                 'description' => '',
-                'country' => 'PL'
+                'country' => 'PO'
             ],
             [
                 'id' => 19,
@@ -166,7 +166,7 @@ class seed_brands extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'name' => 'ANCORA',
                 'description' => '',
-                'country' => 'PL'
+                'country' => 'PO'
             ],
             [
                 'id' => 20,
