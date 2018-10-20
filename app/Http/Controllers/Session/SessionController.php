@@ -41,7 +41,7 @@ class SessionController extends Controller {
 
         return response(new SessionResource(new Session([
             'token' => $token,
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 360
         ])), Response::HTTP_CREATED);
     }
 
