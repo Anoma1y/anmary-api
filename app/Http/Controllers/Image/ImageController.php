@@ -20,7 +20,7 @@ class ImageController extends Controller {
         }
 
         $validator = Validator::make($request->all(), [
-            'image' => 'required|image|mimes:jpeg,png,jpg|min:50|max:4096'
+            'image' => 'required|image|mimes:jpeg,png,jpg|min:20|max:4096'
         ]);
 
         if ($validator->fails()) {
